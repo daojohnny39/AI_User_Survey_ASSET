@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+
+# Never commit collected data
+responses/*
+!responses/.gitkeep
+contact-emails/*
+!contact-emails/.gitkeep
+data/logs/*
+!data/logs/.gitkeep
+
+# Env
+.env
+.env.local

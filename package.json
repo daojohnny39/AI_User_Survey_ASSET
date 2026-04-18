@@ -1,0 +1,24 @@
+{
+  "name": "ai-user-survey",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI User Survey — research questionnaire website",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm -w backend run dev\" \"npm -w frontend run dev\"",
+    "build": "npm -w shared run build && npm -w backend run build && npm -w frontend run build",
+    "parse:survey": "tsx scripts/parse-survey-txt.ts",
+    "lint:schema": "tsx scripts/lint-schema.ts",
+    "export:csv": "tsx scripts/export-csv.ts",
+    "test": "npm -w shared run test && npm -w backend run test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
