@@ -1,7 +1,7 @@
 # AI User Survey
 
 RUN THE PROJECT USING:
-```bash npm run dev```
+```npm run dev```
 
 ---
 
