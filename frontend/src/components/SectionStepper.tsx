@@ -19,7 +19,7 @@ function statusIcon(status: SectionStatus) {
 export function SectionStepper({ sections, currentSectionId, statuses, onNavigate }: Props) {
   return (
     <nav className="flex flex-col gap-0.5">
-      {sections.map((section) => {
+      {sections.map((section, index) => {
         const isCurrent = section.id === currentSectionId;
         return (
           <button
@@ -36,7 +36,7 @@ export function SectionStepper({ sections, currentSectionId, statuses, onNavigat
                 isCurrent ? "bg-indigo-600 text-white" : "bg-slate-200 text-slate-600"
               }`}
             >
-              {section.id}
+              {index + 1}
             </span>
             <span className="flex-1 truncate text-xs font-medium">{section.title}</span>
             {statusIcon(statuses[section.id] ?? "unvisited")}

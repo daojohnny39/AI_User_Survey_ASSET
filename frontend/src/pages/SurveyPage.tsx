@@ -12,24 +12,28 @@ export function SurveyPage({ onReview }: Props) {
   const { state, setAnswer, goToSection, visibilityMap } = useSurvey();
   const { survey, currentSectionId, sectionStatuses, answers, saveIndicator } = state;
 
+  const visibleSections = survey.sections.filter((s) =>
+    survey.questions.some((q) => q.section_id === s.id && visibilityMap.get(q.id) !== false)
+  );
+
   const currentSection = survey.sections.find((s) => s.id === currentSectionId);
   const visibleQuestions = survey.questions.filter(
     (q) => q.section_id === currentSectionId && visibilityMap.get(q.id) !== false
   );
 
-  const sectionIndex = survey.sections.findIndex((s) => s.id === currentSectionId);
+  const sectionIndex = visibleSections.findIndex((s) => s.id === currentSectionId);
   const isFirst = sectionIndex === 0;
-  const isLast = sectionIndex === survey.sections.length - 1;
+  const isLast = sectionIndex === visibleSections.length - 1;
 
   const handlePrev = () => {
-    if (!isFirst) goToSection(survey.sections[sectionIndex - 1].id);
+    if (!isFirst) goToSection(visibleSections[sectionIndex - 1].id);
   };
 
   const handleNext = () => {
     if (isLast) {
       onReview();
     } else {
-      goToSection(survey.sections[sectionIndex + 1].id);
+      goToSection(visibleSections[sectionIndex + 1].id);
     }
   };
 
@@ -40,7 +44,7 @@ export function SurveyPage({ onReview }: Props) {
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-slate-200 bg-white">
         <div className="sticky top-0 h-screen overflow-y-auto p-2 pt-16">
           <SectionStepper
-            sections={survey.sections}
+            sections={visibleSections}
             currentSectionId={currentSectionId}
             statuses={sectionStatuses}
             onNavigate={goToSection}
@@ -51,7 +55,7 @@ export function SurveyPage({ onReview }: Props) {
       <div className="flex flex-1 flex-col">
         <ProgressHeader
           currentSection={sectionIndex + 1}
-          totalSections={survey.sections.length}
+          totalSections={visibleSections.length}
           saveIndicator={saveIndicator}
           onReview={onReview}
         />

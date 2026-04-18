@@ -109,6 +109,10 @@
     {
       "id": 27,
       "title": "SURVEY FEEDBACK"
+    },
+    {
+      "id": 28,
+      "title": "TECHNICAL DEEP DIVE"
     }
   ],
   "questions": [
@@ -8637,6 +8641,208 @@
       "type": "long_text",
       "required": true,
       "max_length": 500
+    },
+    {
+      "id": "q127",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "What is your primary technical role?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        { "value": "software_engineer_developer", "label": "Software Engineer / Developer" },
+        { "value": "devops_sre_platform", "label": "DevOps / SRE / Platform Engineer" },
+        { "value": "data_engineer", "label": "Data Engineer" },
+        { "value": "ml_ai_engineer", "label": "ML / AI Engineer" },
+        { "value": "security_engineer", "label": "Security Engineer" },
+        { "value": "data_scientist_ml_researcher", "label": "Data Scientist / ML Researcher" },
+        { "value": "technical_product_manager", "label": "Technical Product Manager" },
+        { "value": "it_admin_systems_admin", "label": "IT Administrator / Systems Admin" },
+        { "value": "other", "label": "Other", "allow_text": true }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q128",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "How many years have you worked hands-on with AI or ML systems in a professional context?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        { "value": "less_than_1_year", "label": "Less than 1 year" },
+        { "value": "1_3_years", "label": "1–3 years" },
+        { "value": "4_6_years", "label": "4–6 years" },
+        { "value": "7_10_years", "label": "7–10 years" },
+        { "value": "more_than_10_years", "label": "More than 10 years" },
+        { "value": "i_use_ai_tools_but_havent_built_models", "label": "I use AI tools but haven't built or deployed models" }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q129",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "What types of AI/ML systems have you built or deployed? (Select all that apply)",
+      "type": "multi_select",
+      "required": true,
+      "options": [
+        { "value": "llms_generative_ai", "label": "Large language models (LLMs) / generative AI" },
+        { "value": "classical_ml", "label": "Classical ML (regression, classification, clustering)" },
+        { "value": "computer_vision", "label": "Computer vision / image recognition" },
+        { "value": "recommendation_systems", "label": "Recommendation systems" },
+        { "value": "nlp_non_llm", "label": "NLP (non-LLM: sentiment, NER, classification)" },
+        { "value": "reinforcement_learning", "label": "Reinforcement learning" },
+        { "value": "none_use_tools_only", "label": "None — I work with AI tools but don't build models" },
+        { "value": "other", "label": "Other", "allow_text": true }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q130",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "How is the AI your team works with primarily deployed?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        { "value": "user_facing_product", "label": "User-facing product or feature" },
+        { "value": "internal_tooling_automation", "label": "Internal tooling or automation" },
+        { "value": "research_or_experimentation", "label": "Research or experimentation only" },
+        { "value": "third_party_api_integration", "label": "Third-party AI APIs integrated into products" },
+        { "value": "mix_of_the_above", "label": "Mix of the above" }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q131",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "Which evaluation or safety practices does your team currently use? (Select all that apply)",
+      "type": "multi_select",
+      "required": true,
+      "options": [
+        { "value": "automated_regression_testing", "label": "Automated regression testing on model outputs" },
+        { "value": "human_red_teaming", "label": "Human red-teaming or adversarial testing" },
+        { "value": "bias_fairness_audits", "label": "Bias / fairness audits" },
+        { "value": "hallucination_accuracy_benchmarks", "label": "Hallucination / accuracy benchmarks" },
+        { "value": "privacy_impact_assessments", "label": "Privacy impact assessments" },
+        { "value": "none_of_the_above", "label": "None of the above" },
+        { "value": "other", "label": "Other", "allow_text": true }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q132",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "How concerned are you about prompt injection attacks against LLM-based systems your team builds or operates?",
+      "type": "likert_1_5",
+      "required": true,
+      "scale_min_label": "Not at all concerned",
+      "scale_max_label": "Extremely concerned",
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q133",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "For LLM-based systems, which grounding or reliability approach does your team prefer?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        { "value": "rag", "label": "Retrieval-augmented generation (RAG)" },
+        { "value": "fine_tuning", "label": "Fine-tuning on domain data" },
+        { "value": "prompt_engineering_only", "label": "Prompt engineering / system instructions only" },
+        { "value": "rag_and_fine_tuning", "label": "Combination of RAG and fine-tuning" },
+        { "value": "we_dont_use_llms", "label": "We don't use LLMs" },
+        { "value": "other", "label": "Other", "allow_text": true }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q134",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "What is your team's current position on open-weight vs. closed-weight models for production use?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        { "value": "exclusively_closed_weight", "label": "We exclusively use closed-weight / proprietary models (GPT, Claude, Gemini)" },
+        { "value": "prefer_open_weight", "label": "We prefer open-weight models (Llama, Mistral, Gemma) for control and privacy" },
+        { "value": "both_depending_on_use_case", "label": "We use both, depending on the use case" },
+        { "value": "no_formal_position", "label": "We have no formal position" },
+        { "value": "not_applicable", "label": "Not applicable to my work" }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q135",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "How does your organization currently govern AI use? (Select all that apply)",
+      "type": "multi_select",
+      "required": true,
+      "options": [
+        { "value": "formal_ai_policy", "label": "Formal AI / ML policy or acceptable use guidelines" },
+        { "value": "mandatory_ethics_review", "label": "Mandatory ethics or bias review before deployment" },
+        { "value": "model_cards_documentation", "label": "Model cards or documentation requirements" },
+        { "value": "data_provenance_tracking", "label": "Data provenance tracking" },
+        { "value": "third_party_audits", "label": "Third-party audits" },
+        { "value": "no_formal_governance", "label": "No formal governance in place" },
+        { "value": "other", "label": "Other", "allow_text": true }
+      ],
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
+    },
+    {
+      "id": "q136",
+      "section_id": 28,
+      "section_title": "TECHNICAL DEEP DIVE",
+      "prompt": "What do you consider the single biggest unsolved technical risk in AI systems today? (optional, 400 characters)",
+      "type": "long_text",
+      "required": false,
+      "max_length": 400,
+      "show_if": {
+        "op": "any_of",
+        "question": "q6",
+        "values": ["yes_primary_job", "yes_part_of_my_job"]
+      }
     }
   ]
 }
