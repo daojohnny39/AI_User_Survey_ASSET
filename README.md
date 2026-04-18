@@ -1,6 +1,6 @@
 # AI User Survey
 
-RUN THE PROJECT USING:
+RUN THE PROJECT USING (FRONTEND & BACKEND):
 ```npm run dev```
 
 ---
@@ -133,17 +133,3 @@ Reads all response JSON files and writes a CSV to `data/responses.csv`.
 ├── survey-schema/   # Generated survey JSON
 └── data/            # Runtime output — responses, logs (gitignored)
 ```
-
----
-
-## Scripts Reference
-
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install all dependencies |
-| `npm run dev` | Start backend + frontend in development mode |
-| `npm run build` | Build all packages for production |
-| `npm run parse:survey` | Regenerate survey schema from the source `.txt` file |
-| `npm run lint:schema` | Validate the survey schema for correctness |
-| `npm run export:csv` | Export all collected responses to `data/responses.csv` |
-| `npm test` | Run backend unit tests |
