@@ -112,11 +112,60 @@ function referencedQuestions(cond: ShowIfCondition): string[] {
 }
 
 /**
+ * Branch-sensitive condition evaluator.
+ *
+ * Unlike evaluateCondition + a flat allParentsVisible check, this evaluates
+ * parent visibility per-branch so that `or` conditions can reference mutually
+ * exclusive hidden questions (e.g. q6a_general vs q6a_hybrid) without the
+ * entire condition being blocked.
+ *
+ * Rules:
+ *   - Leaf (eq, any_of, etc.): false if the referenced question is hidden.
+ *   - or: true if at least one branch passes its own parent-visibility check.
+ *   - and: true only if every branch passes.
+ *   - not: false if any ref inside the inner condition is hidden (conservative).
+ */
+function evaluateBranchSensitive(
+  cond: ShowIfCondition,
+  answers: AnswerMap,
+  visibilityMap: Map<string, boolean>
+): boolean {
+  switch (cond.op) {
+    case "eq":
+    case "neq":
+    case "any_of":
+    case "all_of":
+    case "none_of":
+    case "gte":
+    case "lte":
+    case "answered":
+    case "not_answered":
+      if (visibilityMap.get(cond.question) === false) return false;
+      return evaluateCondition(cond, answers, visibilityMap);
+    case "and":
+      return cond.conditions.every((c) =>
+        evaluateBranchSensitive(c, answers, visibilityMap)
+      );
+    case "or":
+      return cond.conditions.some((c) =>
+        evaluateBranchSensitive(c, answers, visibilityMap)
+      );
+    case "not": {
+      const innerRefs = referencedQuestions(cond.condition);
+      if (innerRefs.some((ref) => visibilityMap.get(ref) === false))
+        return false;
+      return !evaluateBranchSensitive(cond.condition, answers, visibilityMap);
+    }
+  }
+}
+
+/**
  * Computes a visibility map for all questions.
  * A question is visible iff:
  *   1. It has no show_if condition (always visible), OR
- *   2. Its show_if condition evaluates to true AND every question it
- *      references is itself visible.
+ *   2. Its show_if condition evaluates to true, with visibility checked
+ *      per-branch so that `or` conditions across mutually exclusive parents
+ *      work correctly.
  *
  * Runs to a fixed point to handle chains (Q10 → Q10a → Q10b).
  */
@@ -138,14 +187,7 @@ export function computeVisibility(
     for (const q of survey.questions) {
       if (!q.show_if) continue;
 
-      const refs = referencedQuestions(q.show_if);
-      const allParentsVisible = refs.every((ref) => map.get(ref) !== false);
-
-      const conditionMet =
-        allParentsVisible &&
-        evaluateCondition(q.show_if, answers, map);
-
-      const newVisible = conditionMet;
+      const newVisible = evaluateBranchSensitive(q.show_if, answers, map);
       if (map.get(q.id) !== newVisible) {
         map.set(q.id, newVisible);
         changed = true;
