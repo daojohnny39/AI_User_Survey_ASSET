@@ -1,9 +1,10 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+import * as url from "node:url";
 import { Mutex } from "async-mutex";
 import type { SubmissionRecord } from "@survey/shared";
 
-const ROOT = path.resolve(import.meta.dirname, "../../..");
+const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "../../..");
 const WRITE_ROOT = process.env.VERCEL ? "/tmp/survey-data" : ROOT;
 const RESPONSES_DIR = path.join(WRITE_ROOT, "responses");
 const SCHEMAS_DIR = path.join(RESPONSES_DIR, "_schemas");

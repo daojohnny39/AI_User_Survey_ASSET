@@ -1,11 +1,12 @@
 import { Router } from "express";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import * as url from "node:url";
 
 const router = Router();
 
 // Resolve schema: prefer v1.json, fall back to v1-draft.json
-const ROOT = path.resolve(import.meta.dirname, "../../..");
+const ROOT = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "../../..");
 const SCHEMA_PATHS = [
   path.join(ROOT, "survey-schema", "survey.v1.json"),
   path.join(ROOT, "survey-schema", "survey.v1-draft.json"),

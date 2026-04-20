@@ -16,6 +16,9 @@
     "export:csv": "tsx scripts/export-csv.ts",
     "test": "npm -w shared run test && npm -w backend run test"
   },
+  "engines": {
+    "node": ">=20.11"
+  },
   "devDependencies": {
     "concurrently": "^9.0.1",
     "tsx": "^4.19.2",
