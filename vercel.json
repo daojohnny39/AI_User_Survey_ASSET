@@ -1,4 +1,5 @@
 {
+  "buildCommand": "npm -w shared run build",
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/index" }
   ]
