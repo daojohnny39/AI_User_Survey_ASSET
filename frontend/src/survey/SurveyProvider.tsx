@@ -196,10 +196,10 @@ export function SurveyProvider({
     []
   );
 
-  const goToSection = useCallback(
-    (sectionId: number) => dispatch({ type: "GO_TO_SECTION", sectionId }),
-    []
-  );
+  const goToSection = useCallback((sectionId: number) => {
+    dispatch({ type: "GO_TO_SECTION", sectionId });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const visibilityMap = computeVisibility(survey, state.answers);
   const allMissingRequired = getMissingRequired(survey, state.answers);

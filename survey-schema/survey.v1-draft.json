@@ -44,19 +44,23 @@
     },
     {
       "id": 11,
-      "title": "VIGNETTE \u2014 ALGORITHM BIAS"
+      "title": "VIGNETTE \u2014 ALGORITHM BIAS",
+      "description": "A major tech company started using an AI system to screen job applications. An investigation later showed that the system systematically ranked women\u2019s resumes lower than men\u2019s, even when qualifications were identical. The company used this tool for the past year before the bias was discovered, affecting thousands of applicants."
     },
     {
       "id": 12,
-      "title": "VIGNETTE \u2014 PRIVACY BREACH"
+      "title": "VIGNETTE \u2014 PRIVACY BREACH",
+      "description": "A popular chatbot stores complete conversations, which include sensitive financial and medical information, on unsecured servers. A data breach exposes these conversations from millions of users. Users were not clearly informed that their conversations would be stored."
     },
     {
       "id": 13,
-      "title": "VIGNETTE \u2014 AI SAFETY FAILURE"
+      "title": "VIGNETTE \u2014 AI SAFETY FAILURE",
+      "description": "A teenager experiencing depression began using an AI chatbot as an emotional outlet. Over several weeks, the chatbot, which was designed to be agreeable and supportive, repeatedly validated harmful thoughts instead of recommending professional help. The teenager\u2019s parents later discovered the conversation logs."
     },
     {
       "id": 14,
-      "title": "AI PRIVACY CONCERNS"
+      "title": "AI PRIVACY CONCERNS",
+      "description": "You elect to make an inquiry about a concept you are curious about in passing using an LLM of your choice. However afterwards, you notice you seem to be receiving targeted ads related to the question you asked the LLM."
     },
     {
       "id": 15,
@@ -785,7 +789,7 @@
       "id": "q13",
       "section_id": 11,
       "section_title": "VIGNETTE \u2014 ALGORITHM BIAS",
-      "prompt": "Scenario: A major tech company started using an AI system to screen job applications. An investigation later showed that the system systematically ranked women's resumes lower than men's, even when qualifications were identical. The company used this tool for the past year before the bias was discovered, affecting thousands of applicants.",
+      "prompt": "How serious do you consider this incident?",
       "type": "likert_1_5",
       "required": true,
       "scale_min_label": "Not serious",
@@ -908,7 +912,7 @@
       "id": "q16",
       "section_id": 12,
       "section_title": "VIGNETTE \u2014 PRIVACY BREACH",
-      "prompt": "Scenario: A popular chatbot stores complete conversations, which include sensitive financial and medical information, on unsecured servers. A data breach exposes these conversations from millions of users. Users were not clearly informed that their conversations would be stored.",
+      "prompt": "What is your primary emotional reaction to this incident?",
       "type": "single_select",
       "required": true,
       "options": [
@@ -1027,7 +1031,7 @@
       "id": "q19",
       "section_id": 13,
       "section_title": "VIGNETTE \u2014 AI SAFETY FAILURE",
-      "prompt": "Scenario: A teenager experiencing depression began using an AI chatbot as an emotional outlet. Over several weeks, the chatbot, which was designed to be agreeable and supportive, repeatedly validated harmful thoughts instead of recommending professional help. The teenager's parents later discovered the conversation logs.",
+      "prompt": "How serious do you consider this incident?",
       "type": "likert_1_5",
       "required": true,
       "scale_min_label": "Not serious",
@@ -1117,7 +1121,7 @@
       "id": "q22",
       "section_id": 14,
       "section_title": "AI PRIVACY CONCERNS",
-      "prompt": "Scenario: You elect to make an inquiry about a concept you are curious about in passing using an LLM of your choice. However afterwards, you notice you seem to be receiving targeted ads related to the question you asked the LLM. Are you comfortable with the receiving of these targeted ads?",
+      "prompt": "Are you comfortable with the receiving of these targeted ads?",
       "type": "single_select",
       "required": true,
       "options": [
