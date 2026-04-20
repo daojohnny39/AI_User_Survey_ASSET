@@ -4,9 +4,10 @@ import { Mutex } from "async-mutex";
 import type { SubmissionRecord } from "@survey/shared";
 
 const ROOT = path.resolve(import.meta.dirname, "../../..");
-const RESPONSES_DIR = path.join(ROOT, "responses");
+const WRITE_ROOT = process.env.VERCEL ? "/tmp/survey-data" : ROOT;
+const RESPONSES_DIR = path.join(WRITE_ROOT, "responses");
 const SCHEMAS_DIR = path.join(RESPONSES_DIR, "_schemas");
-const CONTACT_FILE = path.join(ROOT, "contact-emails", "opt-ins.jsonl");
+const CONTACT_FILE = path.join(WRITE_ROOT, "contact-emails", "opt-ins.jsonl");
 
 // Single mutex for all jsonl appends
 const jsonlMutex = new Mutex();

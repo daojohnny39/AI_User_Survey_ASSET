@@ -12,8 +12,13 @@ import { surveyRouter } from "./routes/survey.js";
 import { submitRouter } from "./routes/submit.js";
 
 const ROOT = path.resolve(url.fileURLToPath(import.meta.url), "../../..");
-const LOGS_DIR = path.join(ROOT, "data", "logs");
-fs.mkdirSync(LOGS_DIR, { recursive: true });
+const WRITE_ROOT = process.env.VERCEL ? "/tmp" : ROOT;
+const LOGS_DIR = path.join(WRITE_ROOT, "data", "logs");
+try {
+  fs.mkdirSync(LOGS_DIR, { recursive: true });
+} catch {
+  // read-only filesystem (e.g. Vercel) — logs fall back to stdout
+}
 
 const PORT = parseInt(process.env.PORT ?? "3000", 10);
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN ?? "http://localhost:5173";
@@ -22,7 +27,7 @@ const isProd = process.env.NODE_ENV === "production";
 // Logger
 const logger = pino(
   { level: isProd ? "info" : "debug" },
-  isProd
+  isProd && !process.env.VERCEL
     ? pino.destination(
         path.join(
           LOGS_DIR,
@@ -108,8 +113,10 @@ if (isProd) {
   }
 }
 
-app.listen(PORT, () => {
-  logger.info({ port: PORT, origin: ALLOWED_ORIGIN }, "Survey backend started");
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    logger.info({ port: PORT, origin: ALLOWED_ORIGIN }, "Survey backend started");
+  });
+}
 
 export { app };
