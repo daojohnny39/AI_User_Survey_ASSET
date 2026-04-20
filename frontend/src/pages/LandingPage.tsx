@@ -10,40 +10,57 @@ interface Props {
 export function LandingPage({ surveyTitle, sectionCount, questionCount, hasDraft, onBegin, onResume }: Props) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-16">
-      <div className="w-full max-w-2xl">
-        <div className="mb-8 flex justify-center">
-          <div className="flex h-12 w-36 items-center justify-center rounded bg-slate-200 text-sm font-semibold text-slate-500">
-            ASSET Lab
+      <div className="w-full max-w-xl">
+
+        {/* Logo */}
+        <div className="mb-10 flex justify-center">
+          <div className="flex items-center gap-2.5 rounded-lg bg-slate-800 px-5 py-2.5">
+            <div className="h-5 w-1 rounded-full bg-indigo-400" />
+            <span className="text-sm font-bold tracking-wide text-white">ASSET Lab</span>
           </div>
         </div>
 
-        <h1 className="mb-2 text-center text-2xl font-bold text-slate-800">{surveyTitle}</h1>
-        <p className="mb-6 text-center text-sm text-slate-500">Approximately 25–35 minutes</p>
+        {/* Title block */}
+        <div className="mb-8 text-center">
+          <h1 className="mb-3 text-3xl font-bold tracking-tight text-slate-900 leading-tight">{surveyTitle}</h1>
+          <p className="text-base text-slate-500">Approximately 25–35 minutes to complete</p>
+        </div>
 
-        <div className="mb-8 border-l-4 border-slate-300 pl-4">
-          <p className="text-sm italic text-slate-600 leading-relaxed">
-            Your responses are anonymous. We do not collect IP addresses or identifying information
-            unless you voluntarily provide your email at the end. Your progress is saved locally in
-            your browser.
+        {/* Meta info */}
+        <div className="mb-8 flex justify-center gap-6">
+          <div className="flex flex-col items-center">
+            <span className="text-2xl font-bold text-slate-800">{sectionCount}</span>
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Sections</span>
+          </div>
+          <div className="w-px bg-slate-200" />
+          <div className="flex flex-col items-center">
+            <span className="text-2xl font-bold text-slate-800">~{questionCount}</span>
+            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Questions</span>
+          </div>
+        </div>
+
+        {/* Privacy notice */}
+        <div className="mb-8 rounded-lg border border-slate-200 bg-white px-5 py-4">
+          <p className="text-sm leading-relaxed text-slate-600">
+            <span className="font-semibold text-slate-700">Your responses are anonymous.</span>{" "}
+            We do not collect IP addresses or identifying information unless you voluntarily provide your
+            email at the end. Your progress is saved locally in your browser.
           </p>
         </div>
 
-        <p className="mb-8 text-center text-xs text-slate-400">
-          {sectionCount} sections &bull; ~{questionCount} questions
-        </p>
-
+        {/* CTA buttons */}
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           {hasDraft ? (
             <>
               <button
                 onClick={onResume}
-                className="rounded-lg bg-indigo-600 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                className="rounded-lg bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 active:scale-[0.98] transition-all duration-150"
               >
                 Resume where I left off
               </button>
               <button
                 onClick={onBegin}
-                className="rounded-lg border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-colors"
+                className="rounded-lg border border-slate-300 bg-white px-8 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 active:scale-[0.98] transition-all duration-150"
               >
                 Start fresh
               </button>
@@ -51,7 +68,7 @@ export function LandingPage({ surveyTitle, sectionCount, questionCount, hasDraft
           ) : (
             <button
               onClick={onBegin}
-              className="rounded-lg bg-indigo-600 px-10 py-3 text-base font-bold text-white shadow-sm hover:bg-indigo-700 transition-colors"
+              className="rounded-lg bg-indigo-600 px-12 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-indigo-700 active:scale-[0.98] transition-all duration-150"
             >
               Begin Survey
             </button>

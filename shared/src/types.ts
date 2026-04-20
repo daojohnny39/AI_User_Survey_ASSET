@@ -4,7 +4,8 @@ export type QuestionType =
   | "likert_1_5"
   | "short_text"
   | "long_text"
-  | "email";
+  | "email"
+  | "country_select";
 
 export interface Option {
   value: string;

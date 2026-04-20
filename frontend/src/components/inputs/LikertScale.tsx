@@ -14,17 +14,17 @@ export function LikertScale({ question, value, onChange, hasError }: Props) {
   return (
     <div>
       <div
-        className={`flex gap-2 ${hasError ? "ring-1 ring-red-300 rounded-xl p-2" : ""}`}
+        className={`flex gap-2 ${hasError ? "rounded-xl p-2 ring-1 ring-red-300" : ""}`}
         role="radiogroup"
         aria-labelledby={`q-${question.id}-label`}
       >
         {[1, 2, 3, 4, 5].map((n) => (
           <label
             key={n}
-            className={`flex flex-col items-center gap-1 flex-1 cursor-pointer p-2 rounded-lg transition-colors ${
+            className={`flex flex-1 cursor-pointer select-none flex-col items-center gap-1.5 rounded-lg py-3 transition-all duration-150 active:scale-[0.91] ${
               value === n
-                ? "bg-indigo-600 text-white"
-                : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                ? "bg-indigo-600 text-white shadow-sm"
+                : "bg-white text-slate-600 ring-1 ring-slate-200 hover:ring-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
             }`}
           >
             <input
@@ -35,13 +35,13 @@ export function LikertScale({ question, value, onChange, hasError }: Props) {
               onChange={() => onChange(n)}
               className="sr-only"
             />
-            <span className="text-lg font-semibold">{n}</span>
+            <span className="text-base font-semibold leading-none">{n}</span>
           </label>
         ))}
       </div>
-      <div className="flex justify-between mt-1.5 px-1">
-        <span className="text-xs text-slate-500 max-w-[45%]">{minLabel}</span>
-        <span className="text-xs text-slate-500 max-w-[45%] text-right">{maxLabel}</span>
+      <div className="mt-2 flex justify-between px-1">
+        <span className="max-w-[42%] text-xs leading-tight text-slate-500">{minLabel}</span>
+        <span className="max-w-[42%] text-right text-xs leading-tight text-slate-500">{maxLabel}</span>
       </div>
     </div>
   );

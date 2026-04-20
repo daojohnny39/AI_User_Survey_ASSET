@@ -195,7 +195,7 @@
       "section_id": 1,
       "section_title": "DEMOGRAPHICS",
       "prompt": "Country of residence?",
-      "type": "short_text",
+      "type": "country_select",
       "required": true
     },
     {

@@ -37,11 +37,13 @@ export function MultiSelect({ question, value, onChange, hasError }: Props) {
       {(question.options ?? []).map((opt) => (
         <label
           key={opt.value}
-          className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+          className={`flex cursor-pointer select-none items-start gap-3 rounded-lg border p-3.5 transition-all duration-150 active:scale-[0.985] ${
             selected.includes(opt.value)
-              ? "border-indigo-500 bg-indigo-50"
-              : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
-          } ${hasError ? "border-red-300" : ""}`}
+              ? "border-indigo-400 bg-indigo-50 shadow-sm"
+              : hasError
+                ? "border-red-200 hover:border-slate-300 hover:bg-slate-50"
+                : "border-slate-200 bg-white hover:border-indigo-200 hover:bg-indigo-50/40"
+          }`}
         >
           <input
             type="checkbox"

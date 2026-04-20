@@ -5,6 +5,7 @@ import { LikertScale } from "./inputs/LikertScale.js";
 import { ShortText } from "./inputs/ShortText.js";
 import { LongText } from "./inputs/LongText.js";
 import { EmailInput } from "./inputs/EmailInput.js";
+import { CountrySelect } from "./inputs/CountrySelect.js";
 
 interface Props {
   question: Question;
@@ -13,8 +14,6 @@ interface Props {
   showError?: boolean;
 }
 
-/** Derives a human-readable display number from the question id.
- *  "q10a" → "10a", "sf4" → "SF4" */
 function displayNum(id: string): string {
   if (id.startsWith("sf")) return "SF" + id.slice(2).toUpperCase();
   if (id.startsWith("q")) return id.slice(1);
@@ -84,28 +83,44 @@ export function QuestionRenderer({ question, value, onChange, showError }: Props
             hasError={missingRequired}
           />
         );
+      case "country_select":
+        return (
+          <CountrySelect
+            question={question}
+            value={typeof value === "string" ? value : null}
+            onChange={onChange}
+            hasError={missingRequired}
+          />
+        );
     }
   };
 
   return (
-    <div id={`q-${question.id}`} className="scroll-mt-24">
-      <p
-        id={`q-${question.id}-label`}
-        className="text-sm font-medium text-slate-500 mb-1"
-      >
-        Question {displayNum(question.id)}
+    <div id={`q-${question.id}`} className="scroll-mt-20">
+      {/* Question number badge + required marker */}
+      <div className="mb-2 flex items-center gap-2">
+        <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-600 ring-1 ring-indigo-100">
+          Q{displayNum(question.id)}
+        </span>
         {question.required && (
-          <span className="text-red-500 ml-1" aria-label="required">
-            *
+          <span className="text-xs font-medium text-slate-400" aria-label="required">
+            Required
           </span>
         )}
-      </p>
-      <p className="text-base text-slate-800 mb-3 leading-relaxed font-medium">
+      </div>
+
+      {/* Question text */}
+      <p
+        id={`q-${question.id}-label`}
+        className="mb-4 text-[15px] font-medium leading-relaxed text-slate-800"
+      >
         {question.prompt}
       </p>
+
       {input()}
+
       {missingRequired && (
-        <p className="mt-2 text-xs text-red-600" role="alert">
+        <p className="mt-2 text-xs font-medium text-red-600" role="alert">
           This question requires an answer.
         </p>
       )}
