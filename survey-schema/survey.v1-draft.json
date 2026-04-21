@@ -187,6 +187,10 @@
         {
           "value": "middle_eastern_north_african",
           "label": "Middle Eastern/North African"
+        },
+        {
+          "value": "prefer_not_to_answer",
+          "label": "Prefer not to answer"
         }
       ]
     },
@@ -3222,7 +3226,7 @@
       }
     },
     {
-      "id": "q123",
+      "id": "q48",
       "section_id": 20,
       "section_title": "OPEN-ENDED QUESTIONS",
       "prompt": "In your own words, what is your biggest concern about how AI affects your privacy or security? (500 characters)",
@@ -3231,7 +3235,7 @@
       "max_length": 500
     },
     {
-      "id": "q124",
+      "id": "q49",
       "section_id": 20,
       "section_title": "OPEN-ENDED QUESTIONS",
       "prompt": "Briefly describe one specific way AI has affected your personal or professional life \u2014 positively or negatively. (500 characters)",
