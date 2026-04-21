@@ -1,13 +1,15 @@
 interface Props {
   surveyTitle: string;
-  sectionCount: number;
-  questionCount: number;
+  minSectionCount: number;
+  maxSectionCount: number;
+  minQuestionCount: number;
+  maxQuestionCount: number;
   hasDraft: boolean;
   onBegin: () => void;
   onResume: () => void;
 }
 
-export function LandingPage({ surveyTitle, sectionCount, questionCount, hasDraft, onBegin, onResume }: Props) {
+export function LandingPage({ surveyTitle, minSectionCount, maxSectionCount, minQuestionCount, maxQuestionCount, hasDraft, onBegin, onResume }: Props) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-16">
       <div className="w-full max-w-xl">
@@ -29,12 +31,12 @@ export function LandingPage({ surveyTitle, sectionCount, questionCount, hasDraft
         {/* Meta info */}
         <div className="mb-8 flex justify-center gap-6">
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-slate-800">{sectionCount}</span>
+            <span className="text-2xl font-bold text-slate-800">{minSectionCount === maxSectionCount ? minSectionCount : `${minSectionCount}–${maxSectionCount}`}</span>
             <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Sections</span>
           </div>
           <div className="w-px bg-slate-200" />
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-slate-800">~{questionCount}</span>
+            <span className="text-2xl font-bold text-slate-800">{minQuestionCount === maxQuestionCount ? minQuestionCount : `${minQuestionCount}–${maxQuestionCount}`}</span>
             <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Questions</span>
           </div>
         </div>

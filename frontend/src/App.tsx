@@ -58,11 +58,19 @@ export function App() {
   }
 
   if (page === "landing") {
+    const minQuestions = survey.questions.filter((q) => !q.show_if).length;
+    const maxQuestions = survey.questions.length;
+    const minSections = survey.sections.filter((s) =>
+      survey.questions.some((q) => q.section_id === s.id && !q.show_if)
+    ).length;
+    const maxSections = survey.sections.length;
     return (
       <LandingPage
         surveyTitle={survey.title}
-        sectionCount={survey.sections.length}
-        questionCount={survey.questions.length}
+        minSectionCount={minSections}
+        maxSectionCount={maxSections}
+        minQuestionCount={minQuestions}
+        maxQuestionCount={maxQuestions}
         hasDraft={draft !== null}
         onBegin={() => {
           clearAllDrafts();
