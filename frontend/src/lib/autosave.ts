@@ -7,6 +7,7 @@ export interface DraftData {
   answers: AnswerMap;
   startedAt: string;
   currentSectionId: number;
+  maxReachedSectionId?: number;
 }
 
 export function saveDraft(draftId: string, data: Omit<DraftData, "draftId">): void {

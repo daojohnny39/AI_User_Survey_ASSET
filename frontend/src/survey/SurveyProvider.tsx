@@ -29,6 +29,7 @@ export interface SurveyState {
   answers: AnswerMap;
   startedAt: string;
   currentSectionId: number;
+  maxReachedSectionId: number;
   sectionStatuses: Record<number, SectionStatus>;
   saveIndicator: boolean; // briefly true after each save
 }
@@ -38,6 +39,7 @@ export interface SurveyState {
 type Action =
   | { type: "SET_ANSWER"; questionId: string; value: AnswerValue }
   | { type: "GO_TO_SECTION"; sectionId: number }
+  | { type: "ADVANCE_TO_SECTION"; sectionId: number }
   | { type: "SHOW_SAVE_INDICATOR" }
   | { type: "HIDE_SAVE_INDICATOR" };
 
@@ -114,6 +116,20 @@ function reducer(state: SurveyState, action: Action): SurveyState {
         sectionStatuses: newStatuses,
       };
     }
+    case "ADVANCE_TO_SECTION": {
+      const newStatuses = computeSectionStatuses(
+        state.survey,
+        state.answers,
+        action.sectionId,
+        state.sectionStatuses
+      );
+      return {
+        ...state,
+        currentSectionId: action.sectionId,
+        maxReachedSectionId: Math.max(state.maxReachedSectionId, action.sectionId),
+        sectionStatuses: newStatuses,
+      };
+    }
     case "SHOW_SAVE_INDICATOR":
       return { ...state, saveIndicator: true };
     case "HIDE_SAVE_INDICATOR":
@@ -127,6 +143,7 @@ interface SurveyContextValue {
   state: SurveyState;
   setAnswer: (questionId: string, value: AnswerValue) => void;
   goToSection: (sectionId: number) => void;
+  advanceToSection: (sectionId: number) => void;
   visibilityMap: Map<string, boolean>;
   allMissingRequired: string[];
 }
@@ -147,6 +164,7 @@ interface SurveyProviderProps {
   initialAnswers?: AnswerMap;
   initialStartedAt?: string;
   initialSectionId?: number;
+  initialMaxReachedSectionId?: number;
   children: React.ReactNode;
 }
 
@@ -156,10 +174,15 @@ export function SurveyProvider({
   initialAnswers = {},
   initialStartedAt,
   initialSectionId = 1,
+  initialMaxReachedSectionId,
   children,
 }: SurveyProviderProps) {
   const draftId = initialDraftId ?? uuidv4();
   const startedAt = initialStartedAt ?? new Date().toISOString();
+  const resolvedMaxReached = Math.max(
+    initialSectionId,
+    initialMaxReachedSectionId ?? initialSectionId
+  );
 
   const [state, dispatch] = useReducer(reducer, {
     survey,
@@ -167,6 +190,7 @@ export function SurveyProvider({
     answers: initialAnswers,
     startedAt,
     currentSectionId: initialSectionId,
+    maxReachedSectionId: resolvedMaxReached,
     sectionStatuses: initialStatuses(survey, initialSectionId),
     saveIndicator: false,
   });
@@ -180,6 +204,7 @@ export function SurveyProvider({
         answers: state.answers,
         startedAt: state.startedAt,
         currentSectionId: state.currentSectionId,
+        maxReachedSectionId: state.maxReachedSectionId,
       });
       dispatch({ type: "SHOW_SAVE_INDICATOR" });
       setTimeout(() => dispatch({ type: "HIDE_SAVE_INDICATOR" }), 1800);
@@ -201,12 +226,17 @@ export function SurveyProvider({
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  const advanceToSection = useCallback((sectionId: number) => {
+    dispatch({ type: "ADVANCE_TO_SECTION", sectionId });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const visibilityMap = computeVisibility(survey, state.answers);
   const allMissingRequired = getMissingRequired(survey, state.answers);
 
   return (
     <SurveyContext.Provider
-      value={{ state, setAnswer, goToSection, visibilityMap, allMissingRequired }}
+      value={{ state, setAnswer, goToSection, advanceToSection, visibilityMap, allMissingRequired }}
     >
       {children}
     </SurveyContext.Provider>

@@ -105,6 +105,14 @@ export function App() {
           initialAnswers={activeDraft?.answers as AnswerMap | undefined}
           initialStartedAt={activeDraft?.startedAt}
           initialSectionId={activeDraft?.currentSectionId}
+          initialMaxReachedSectionId={
+            activeDraft
+              ? Math.max(
+                  activeDraft.currentSectionId ?? 1,
+                  activeDraft.maxReachedSectionId ?? activeDraft.currentSectionId ?? 1
+                )
+              : undefined
+          }
         >
           {page === "survey" && <SurveyPage onReview={() => setPage("review")} />}
           {page === "review" && (
