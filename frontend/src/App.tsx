@@ -6,6 +6,7 @@ import { SurveyPage } from "./pages/SurveyPage.js";
 import { ReviewPage } from "./pages/ReviewPage.js";
 import { ThankYouPage } from "./pages/ThankYouPage.js";
 import { findExistingDraft, clearAllDrafts } from "./lib/autosave.js";
+import { ConsentOverlay } from "./components/ConsentOverlay.js";
 import type { Survey, AnswerMap } from "@survey/shared";
 import type { DraftData } from "./lib/autosave.js";
 
@@ -20,6 +21,7 @@ export function App() {
   const [draft, setDraft] = useState<DraftData | null>(null);
   // When "Start fresh" is chosen, we clear draft and pass no initial data
   const [useDraft, setUseDraft] = useState(false);
+  const [consentRequired, setConsentRequired] = useState(false);
 
   useEffect(() => {
     fetchSurvey()
@@ -76,6 +78,7 @@ export function App() {
           clearAllDrafts();
           setDraft(null);
           setUseDraft(false);
+          setConsentRequired(true);
           setPage("survey");
         }}
         onResume={() => {
@@ -89,24 +92,42 @@ export function App() {
   const activeDraft = useDraft ? draft : null;
 
   return (
-    <SurveyProvider
-      survey={survey}
-      initialDraftId={activeDraft?.draftId}
-      initialAnswers={activeDraft?.answers as AnswerMap | undefined}
-      initialStartedAt={activeDraft?.startedAt}
-      initialSectionId={activeDraft?.currentSectionId}
-    >
-      {page === "survey" && <SurveyPage onReview={() => setPage("review")} />}
-      {page === "review" && (
-        <ReviewPage
-          onBack={() => setPage("survey")}
-          onSubmitSuccess={(id) => {
-            setSubmissionId(id);
-            setPage("thankyou");
+    <>
+      <div
+        className={`transition-[filter] duration-500 ${
+          consentRequired ? "pointer-events-none select-none blur-sm" : ""
+        }`}
+        aria-hidden={consentRequired || undefined}
+      >
+        <SurveyProvider
+          survey={survey}
+          initialDraftId={activeDraft?.draftId}
+          initialAnswers={activeDraft?.answers as AnswerMap | undefined}
+          initialStartedAt={activeDraft?.startedAt}
+          initialSectionId={activeDraft?.currentSectionId}
+        >
+          {page === "survey" && <SurveyPage onReview={() => setPage("review")} />}
+          {page === "review" && (
+            <ReviewPage
+              onBack={() => setPage("survey")}
+              onSubmitSuccess={(id) => {
+                setSubmissionId(id);
+                setPage("thankyou");
+              }}
+            />
+          )}
+          {page === "thankyou" && <ThankYouPage submissionId={submissionId} />}
+        </SurveyProvider>
+      </div>
+      {consentRequired && (
+        <ConsentOverlay
+          onAgree={() => setConsentRequired(false)}
+          onDisagree={() => {
+            setConsentRequired(false);
+            setPage("landing");
           }}
         />
       )}
-      {page === "thankyou" && <ThankYouPage submissionId={submissionId} />}
-    </SurveyProvider>
+    </>
   );
 }
