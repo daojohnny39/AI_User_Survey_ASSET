@@ -47,13 +47,18 @@ export function ConsentOverlay({ onAgree, onDisagree }: Props) {
             Consent to participate
           </h2>
           <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
-            <p>
-              By proceeding, you acknowledge that the responses you provide in this
-              survey will be collected and used for research purposes by ASSET Lab.
+            <p style={{textIndent: "1.5em"}}>
+              This survey is part of a study which intends to understand the user perception of AI.
+All responses are treated as confidential, and in no case will responses from individual
+participants be identified. Rather, all data will be pooled and published in aggregate form only.
+To help protect your confidentiality, the surveys will not contain information that will personally
+identify you. The results of this study will be used for scholarly purposes only.
             </p>
-            <p>
-              Your responses are anonymous unless you voluntarily share contact
-              information at the end. You may stop and close the page at any time.
+            <p style={{textIndent: "1.5em"}}>
+              If participants have further questions about this study or their rights, or if they wish to lodge a
+complaint or concern, they may contact the investigator at <a href="mailto:schattopadhyay@umkc.edu" className="text-indigo-600 hover:underline">schattopadhyay@umkc.edu</a>. 
+If you are 18 years of age or older, understand the statements above, and freely consent to
+participate in the survey, check the "I Agree" option to begin the survey.
             </p>
           </div>
           <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
